@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "258418366733",
+    "firebase_url": "https://rolezao-3a24b.firebaseio.com",
+    "project_id": "rolezao-3a24b",
+    "storage_bucket": "rolezao-3a24b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258418366733:android:67a6325f9cbe84a1253844",
+        "android_client_info": {
+          "package_name": "br.udesc.rolezao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258418366733-64lgtn8is3lai5hhgv7geeqp10t7kh71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.udesc.rolezao",
+            "certificate_hash": "bc7d0ae1f200966f25b6838c3210eb7c92da4d92"
+          }
+        },
+        {
+          "client_id": "258418366733-q4c3dsc3ke8pt0lqul3m8mlol794i4h4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA-o6naN5x1DWBEPXO-lkSxGkRnao25bY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258418366733-q4c3dsc3ke8pt0lqul3m8mlol794i4h4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
