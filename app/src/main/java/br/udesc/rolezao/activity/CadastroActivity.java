@@ -111,7 +111,9 @@ public class CadastroActivity extends AppCompatActivity {
         campoNome = findViewById(R.id.editCadastroNome);
         campoEmail = findViewById(R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
-        botaoCadastrar = findViewById(R.id.buttonCadastroCadastrar);
+        botaoCadastrar = findViewById(R.id.buttonEntrar);
         progressBar = findViewById(R.id.progressCadastro);
+
+        campoNome.requestFocus();
     }
 }
