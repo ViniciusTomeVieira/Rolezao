@@ -1,14 +1,18 @@
-package br.udesc.rolezao;
+package br.udesc.rolezao.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class CadastroActivity extends AppCompatActivity {
+import br.udesc.rolezao.R;
+
+public class MainActivity extends AppCompatActivity {
+
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_main);
     }
 }
