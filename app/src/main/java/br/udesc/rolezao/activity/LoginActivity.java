@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
         verificarUsuarioLogado(); //Verificar se ja tem o usuario logado ou cadastrado
         inicializarComponentes();
