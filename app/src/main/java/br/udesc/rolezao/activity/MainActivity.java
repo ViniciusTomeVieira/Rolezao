@@ -8,11 +8,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
      * Método responsável por tratar eventos de click na BottomNavigation
      * @param viewEx
      */
-    private void habilitarNavegacao(BottomNavigationViewEx viewEx){
+    private void habilitarNavegacao(final BottomNavigationViewEx viewEx){
         viewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home :
                         fragmentTransaction.replace(R.id.viewPager, new FeedFragment()).commit();
+                        trocarCorItem(viewEx,0);
                         return true;
                     case R.id.ic_perfil :
                         fragmentTransaction.replace(R.id.viewPager, new PerfilFragment()).commit();
@@ -91,6 +94,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void trocarCorItem(BottomNavigationViewEx viewEx, int position){
+        Menu menu = viewEx.getMenu();
+        MenuItem menuItem = menu.getItem(position);
+        //Icon icon = new Icon(1);
+        //menuItem.setIcon();
+        //Continua...
     }
 
     @Override
