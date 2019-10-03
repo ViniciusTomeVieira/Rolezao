@@ -20,6 +20,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
         toolbar.setTitle("Editar Perfil");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp); //Trocar icone
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp); //Trocar icone
     }
 }

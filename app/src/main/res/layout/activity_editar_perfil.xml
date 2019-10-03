@@ -59,6 +59,8 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SALVAR ALTERAÇÕES" />
+            android:background="@drawable/backgrounddegrade"
+            android:text="SALVAR ALTERAÇÕES"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>
