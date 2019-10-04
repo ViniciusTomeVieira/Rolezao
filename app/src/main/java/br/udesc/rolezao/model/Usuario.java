@@ -3,6 +3,9 @@ package br.udesc.rolezao.model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import br.udesc.rolezao.helper.ConfiguracaoFirebase;
 
 public class Usuario {
@@ -22,6 +25,26 @@ public class Usuario {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
         usuariosRef.setValue(this);
+    }
+
+    public void atualizar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference usuarioRef = firebaseRef.child("usuarios").child(getId());
+        Map<String,Object> valoresUsuario = converterParaMap();
+        usuarioRef.updateChildren(valoresUsuario);
+    }
+    public Map<String, Object> converterParaMap(){
+        HashMap<String, Object> usuarioMap = new HashMap<>();
+        usuarioMap.put("email",getEmail());
+        usuarioMap.put("nome",getNome());
+        usuarioMap.put("id",getId());
+        usuarioMap.put("cidade",getCaminhoFoto());
+        usuarioMap.put("nivel",getNivel());
+        usuarioMap.put("experiencia",getExperiencia());
+        usuarioMap.put("dinheiro",getDinheiro());
+        usuarioMap.put("conquistas",getConquistas());
+
+        return usuarioMap;
     }
 
     public int getExperiencia() {
