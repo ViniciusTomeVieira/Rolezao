@@ -3,11 +3,14 @@ package br.udesc.rolezao.helper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ConfiguracaoFirebase {
 
     private static DatabaseReference referenciaFirebase;
     private static FirebaseAuth referenciaAutenticacao;
+    private static StorageReference storage;
 
     //retorna a instancia de firebaseatuh
 
@@ -24,4 +27,13 @@ public class ConfiguracaoFirebase {
         }
         return  referenciaFirebase;
     }
+
+    public static StorageReference getFirebaseStorage(){
+        if(storage == null){
+            storage = FirebaseStorage.getInstance().getReference();
+        }
+        return storage;
+    }
+
+
 }

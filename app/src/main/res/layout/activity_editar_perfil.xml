@@ -18,8 +18,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoEditarPerfil"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:src="@drawable/avatar" />
 
         <TextView
