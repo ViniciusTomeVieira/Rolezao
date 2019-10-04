@@ -28,7 +28,7 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText campoNome, campoEmail, campoSenha;
     private Button botaoCadastrar;
     private ProgressBar progressBar;
-    private Usuario usuario;
+    private Usuario usuarioMain;
     private FirebaseAuth autenticacao;
 
     @Override
@@ -49,11 +49,11 @@ public class CadastroActivity extends AppCompatActivity {
                 if(!textoNome.isEmpty()){
                     if(!textoEmail.isEmpty()){
                         if(!textoSenha.isEmpty()){
-                            usuario = new Usuario();
-                            usuario.setNome(textoNome);
-                            usuario.setEmail(textoEmail);
-                            usuario.setSenha(textoSenha);
-                            cadastrarUsuario(usuario);
+                            usuarioMain = new Usuario();
+                            usuarioMain.setNome(textoNome);
+                            usuarioMain.setEmail(textoEmail);
+                            usuarioMain.setSenha(textoSenha);
+                            cadastrarUsuario(usuarioMain);
                         }else{
                             Toast.makeText(CadastroActivity.this,"Preencha a senha!",Toast.LENGTH_SHORT).show();
                         }
@@ -80,10 +80,25 @@ public class CadastroActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(CadastroActivity.this,"Cadastro com sucesso!",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            finish();
+
+                            try{
+                                progressBar.setVisibility(View.GONE);
+                                //Salvar dados no firebase
+
+                                String idUsuario = task.getResult().getUser().getUid();
+                                usuarioMain.setId(idUsuario);
+                                usuarioMain.setCidade("Ibirama");
+                                usuarioMain.setConquistas(0);
+                                usuarioMain.setDinheiro(0.0);
+                                usuarioMain.setNivel(1);
+                                usuarioMain.salvar();
+                                Toast.makeText(CadastroActivity.this,"Cadastro com sucesso!",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                finish();
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+
                         }else{
                             progressBar.setVisibility(View.GONE);
                             String erroExcecao = "";

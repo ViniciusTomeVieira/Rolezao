@@ -1,13 +1,67 @@
 package br.udesc.rolezao.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
+import br.udesc.rolezao.helper.ConfiguracaoFirebase;
+
 public class Usuario {
     private  String id;
     private  String nome;
     private  String email;
     private  String senha;
     private String caminhoFoto;
+    private int experiencia, nivel, conquistas;
+    private double dinheiro;
+    private String cidade;
 
     public Usuario() {
+    }
+
+    public void salvar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
+        usuariosRef.setValue(this);
+    }
+
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public int getConquistas() {
+        return conquistas;
+    }
+
+    public void setConquistas(int conquistas) {
+        this.conquistas = conquistas;
+    }
+
+    public double getDinheiro() {
+        return dinheiro;
+    }
+
+    public void setDinheiro(double dinheiro) {
+        this.dinheiro = dinheiro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getId() {
@@ -33,7 +87,7 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @Exclude
     public String getSenha() {
         return senha;
     }
