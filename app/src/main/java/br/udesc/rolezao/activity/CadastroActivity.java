@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import br.udesc.rolezao.R;
 import br.udesc.rolezao.helper.ConfiguracaoFirebase;
+import br.udesc.rolezao.helper.UsuarioFirebase;
 import br.udesc.rolezao.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -68,7 +69,7 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    public void cadastrarUsuario(Usuario usuario){
+    public void cadastrarUsuario(final Usuario usuario){
         progressBar.setVisibility(View.VISIBLE);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
@@ -92,6 +93,11 @@ public class CadastroActivity extends AppCompatActivity {
                                 usuarioMain.setDinheiro(0.0);
                                 usuarioMain.setNivel(1);
                                 usuarioMain.salvar();
+
+                                //Salvar dados no profile do firebase
+
+                                UsuarioFirebase.atualizarNomeUsuario(usuarioMain.getNome());
+
                                 Toast.makeText(CadastroActivity.this,"Cadastro com sucesso!",Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                 finish();

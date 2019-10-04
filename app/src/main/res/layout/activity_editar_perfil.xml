@@ -17,13 +17,13 @@
         android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fotoUsuario"
+            android:id="@+id/fotoEditarPerfil"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@drawable/avatar" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textAlterarFoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -36,6 +36,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editNomePerfil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_perfil_preto"
@@ -48,15 +49,16 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editEmailPerfil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_email_black_24dp"
                 android:drawableTint="@android:color/darker_gray"
-                android:hint="Email"/>
+                android:hint="Email" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonSalvarAlteracoes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/backgrounddegrade"

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,7 +47,7 @@ public class PerfilFragment extends Fragment {
         conquistasUsuario = view.findViewById(R.id.conquistasUsuario);
         dinheiroUsuario = view.findViewById(R.id.dinheiroUsuario);
         progressBarUsuario = view.findViewById(R.id.progressBarUsuario);
-        fotoUsuario = view.findViewById(R.id.fotoUsuario);
+        fotoUsuario = view.findViewById(R.id.fotoEditarPerfil);
         buttonEditarPerfil = view.findViewById(R.id.buttonEditarPerfil);
 
         //Abrir edição do perfil
