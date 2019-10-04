@@ -72,6 +72,7 @@ public class PerfilFragment extends Fragment {
         Uri url = usuarioPerfil.getPhotoUrl();
         if(url != null){
             //Glide.with(PerfilFragment.this).load(url).into(fotoUsuario);
+            Glide.with(getContext()).load(url).into(fotoUsuario);
         }else{
             fotoUsuario.setImageResource(R.drawable.avatar);
         }
