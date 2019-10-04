@@ -43,6 +43,7 @@ public class Usuario {
         usuarioMap.put("experiencia",getExperiencia());
         usuarioMap.put("dinheiro",getDinheiro());
         usuarioMap.put("conquistas",getConquistas());
+        usuarioMap.put("caminhoFoto",getCaminhoFoto());
 
         return usuarioMap;
     }

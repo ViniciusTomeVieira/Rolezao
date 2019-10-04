@@ -88,6 +88,7 @@ public class CadastroActivity extends AppCompatActivity {
 
                                 String idUsuario = task.getResult().getUser().getUid();
                                 usuarioMain.setId(idUsuario);
+                                usuarioMain.setCaminhoFoto("");
                                 usuarioMain.setCidade("Ibirama");
                                 usuarioMain.setConquistas(0);
                                 usuarioMain.setDinheiro(0.0);
