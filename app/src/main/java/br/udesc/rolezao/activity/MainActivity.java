@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.drawable.Icon;
+import android.media.tv.TvContract;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -47,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
 
         //Configuração BottomNavigation
         configuraBottomNavigation();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"1" )
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle("Rolezão criado!")
+                .setContentText("Parabéns!!!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, builder.build());
 
     }
 
