@@ -2,6 +2,7 @@ package br.udesc.rolezao.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import br.udesc.rolezao.R;
 import br.udesc.rolezao.activity.EditarPerfilActivity;
 import br.udesc.rolezao.activity.MainActivity;
 import br.udesc.rolezao.helper.UsuarioFirebase;
+import br.udesc.rolezao.model.Usuario;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -32,6 +34,8 @@ public class PerfilFragment extends Fragment {
     private ProgressBar progressBarUsuario;
     private CircleImageView fotoUsuario;
     private FloatingActionButton buttonEditarPerfil;
+    private static final String ARQUIVO_PREEFERENCIA = "ArquivoPreferencia";
+    private SharedPreferences preferences;
 
 
     public PerfilFragment() {
@@ -67,7 +71,15 @@ public class PerfilFragment extends Fragment {
 
         //Mostra os dados do usuario
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
+        Usuario dadosUsuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+
+        //Colocando dados no perfil do usuario
         nomeUsuario.setText(usuarioPerfil.getDisplayName());
+        nivelUsuario.setText(dadosUsuarioLogado.getNivel()+"");
+        progressBarUsuario.setProgress(dadosUsuarioLogado.getExperiencia());
+        conquistasUsuario.setText(dadosUsuarioLogado.getConquistas()+"");
+        dinheiroUsuario.setText(dadosUsuarioLogado.getDinheiro()+"");
+
 
         Uri url = usuarioPerfil.getPhotoUrl();
         if(url != null){
@@ -76,7 +88,13 @@ public class PerfilFragment extends Fragment {
         }else{
             fotoUsuario.setImageResource(R.drawable.avatar);
         }
-
+        preferences = this.getActivity().getSharedPreferences(ARQUIVO_PREEFERENCIA,0);
+        if(preferences.contains("cidade")){
+            String cidade = preferences.getString("cidade","Ibirama");
+            cidadeUsuario.setText(cidade);
+        }else{
+            cidadeUsuario.setText("Ibirama");
+        }
         return view;
     }
 
