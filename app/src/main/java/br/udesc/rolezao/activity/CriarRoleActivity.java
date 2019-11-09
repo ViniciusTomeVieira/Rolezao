@@ -16,10 +16,10 @@ public class CriarRoleActivity extends AppCompatActivity {
 
         // Configura Toolbar
 
-        Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
-        toolbar.setTitle("Editar Perfil");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp); //Trocar icone
+//        Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
+//        toolbar.setTitle("Editar Perfil");
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp); //Trocar icone
     }
 }
