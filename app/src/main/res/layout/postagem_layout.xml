@@ -24,16 +24,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/titulo_postagem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:drawableLeft="@drawable/ic_smoking_rooms_black_24dp"
                     android:text="Titulo"
                     android:textColor="#673AB7"
                     android:textSize="18sp" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imagem_role"
                     android:layout_width="410dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -47,19 +48,55 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/preco"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:drawableLeft="@drawable/dinheiro_role_rosa"
                         android:text="R$ 100,00"
                         android:textColor="#673AB7" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/data_inicio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="20/10/2019"
+                        android:drawableLeft="@drawable/calendar_role"
+                        android:text="20/10/2019 10:50:10"
+                        android:textColor="#673AB7" />
+
+                    <TextView
+                        android:id="@+id/data_fim_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/calendar_role"
+                        android:text="20/10/2019 10:55:00"
+                        android:textColor="#673AB7" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_info_role"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/local_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/localizacao_role"
+                        android:text="Baliza"
+                        android:textColor="#673AB7" />
+
+                    <TextView
+                        android:id="@+id/pessoas_confirmadas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_people_outline_black_24dp"
+                        android:text="20/500"
                         android:textColor="#673AB7" />
                 </LinearLayout>
 
@@ -73,7 +110,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView14"
+                            android:id="@+id/descricao_role"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eleifend est ac neque bibendum, quis ultrices tellus ultricies. Aliquam erat magna, sollicitudin ut egestas id, accumsan eget elit. Cras id nunc id sapien tincidunt facilisis sed sit amet felis. Mauris quis odio ac ex dapibus consectetur. Mauris euismod erat at consequat dictum. Sed posuere mauris quis orci ornare ultricies. In cursus a dui aliquam volutpat. Maecenas nec dictum mi. Aenean vestibulum id nisi vel imperdiet. Mauris ac condimentum ipsum. Aenean faucibus pulvinar massa vitae maximus. Pellentesque et suscipit tellus, id tempus nisi. Etiam tincidunt id lacus in finibus.  Duis eu nunc laoreet, accumsan magna vitae, sagittis tortor. Proin cursus id felis quis vestibulum. Quisque dictum sodales sodales. Nulla dictum tempor nibh ut pellentesque. Suspendisse at viverra leo, a tincidunt lacus. Ut at lectus tellus. Integer viverra lacus purus, vel scelerisque urna scelerisque ut. Morbi sodales odio id mattis venenatis. Vivamus tristique egestas vulputate. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.  Aliquam molestie pellentesque nisi ut scelerisque. Sed blandit sem at sollicitudin congue. Nulla dictum nibh id est ornare, ac elementum dui fermentum. Sed sed magna ut ipsum dapibus scelerisque. Integer molestie eu sapien ut consequat. Fusce non bibendum libero, non euismod est. Nulla turpis tellus, sollicitudin nec auctor vitae, elementum at urna. Fusce ac mauris viverra, maximus orci et, dignissim magna. Vestibulum pretium augue eu dui maximus sagittis. Nullam semper volutpat nunc nec posuere.  Nullam malesuada eget sem eget efficitur. Phasellus cursus nulla id velit consequat ultricies. Vivamus ac porta ante, in mollis turpis. Nullam porttitor, justo sed sagittis iaculis, nisi mauris consequat orci, sed sagittis est enim sit amet nisl. Nulla pretium lacinia magna, tincidunt accumsan arcu laoreet vel. Nam risus libero, laoreet sit amet felis ac, porta pulvinar ligula. Aenean nibh urna, fringilla ut dictum sit amet, mattis eu nisi. In nec quam non ante rhoncus dapibus quis a tortor. Duis ligula augue, feugiat id sapien ut, tempus finibus lorem. Nullam in malesuada turpis. Integer rhoncus tortor non tincidunt vehicula. Curabitur non ex a sem convallis lacinia. Vestibulum tempor tempor dapibus. Fusce condimentum mi eu risus tempor, at facilisis mi blandit. Curabitur pharetra fringilla interdum. Phasellus mollis bibendum aliquam.  Suspendisse vel risus vel sem pretium laoreet. Duis tincidunt magna quis fermentum malesuada. Proin aliquam orci ante, et accumsan est commodo nec. Morbi bibendum massa sed lorem tempus pulvinar. Integer lobortis turpis ut viverra rutrum. Maecenas finibus sollicitudin sagittis. Nam eleifend molestie nulla id lobortis. Vestibulum neque ipsum, condimentum sed sapien nec, ornare lobortis mi. Fusce ultricies ex ut venenatis aliquam. Vivamus semper fringilla dictum. Curabitur cursus, tortor at blandit facilisis, tellus ipsum semper urna, ut fringilla magna massa id nibh. Donec malesuada risus sed felis consectetur sodales. Praesent dui diam, laoreet quis augue at, auctor sollicitudin quam." />
