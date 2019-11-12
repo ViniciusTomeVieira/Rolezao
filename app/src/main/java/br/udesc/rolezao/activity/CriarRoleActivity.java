@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +21,7 @@ import br.udesc.rolezao.model.Usuario;
 
 public class CriarRoleActivity extends AppCompatActivity {
 
-    private Button buttonAumentar, buttonDiminuir, buttonCriarRole;
+    private Button buttonAumentar, buttonDiminuir, buttonCriarRole, buttonMaps;
     private EditText quantidadePessoas, editTextTitulo, editTextLocal, editTextDia,editTextMes,editTextHora,editTextDescricao,editTextQuantidadePessoas, editTextDinheiro;
     private int quantidade = 0;
     @Override
@@ -52,6 +53,14 @@ public class CriarRoleActivity extends AppCompatActivity {
         buttonAumentar = findViewById(R.id.buttonAumentar);
         buttonDiminuir = findViewById(R.id.buttonDiminuir);
         buttonCriarRole = findViewById(R.id.buttonCriarRole);
+        buttonMaps = findViewById(R.id.buttonMaps);
+        buttonMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i  = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
+            }
+        });
         buttonAumentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +131,7 @@ public class CriarRoleActivity extends AppCompatActivity {
                 dinheiroTotal = dinheiro;
             }
             //Cadastrar rolê
+
             Role role = new Role();
             role.setDescricao(editTextDescricao.getText().toString());
             role.setDia(Integer.parseInt(editTextDia.getText().toString()));
@@ -138,10 +148,7 @@ public class CriarRoleActivity extends AppCompatActivity {
                 role.salvarRole(usuarioAtual);
                 Toast.makeText(getApplicationContext(),"Rolê criado com sucesso!",Toast.LENGTH_SHORT).show();
 
-                //Trocar fragment
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.viewPager, new FeedFragment()).commit();
+                finish();
             }catch (Exception ex){
                 Toast.makeText(getApplicationContext(),"Catch interno",Toast.LENGTH_SHORT).show();
                 ex.printStackTrace();

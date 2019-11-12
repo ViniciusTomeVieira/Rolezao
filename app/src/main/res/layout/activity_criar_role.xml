@@ -266,7 +266,7 @@
         <LinearLayout
             android:id="@+id/linearLocalizacao"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
@@ -280,6 +280,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Localização: " />
+
+            <Button
+                android:id="@+id/buttonMaps"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:height="10dp"
+                android:background="@drawable/googlemapslogo"
+                android:gravity="center"
+                android:minWidth="0dp"
+                android:minHeight="0dip" />
         </LinearLayout>
     </LinearLayout>
 
