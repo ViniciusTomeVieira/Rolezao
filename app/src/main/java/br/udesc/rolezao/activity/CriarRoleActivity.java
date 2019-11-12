@@ -2,8 +2,6 @@ package br.udesc.rolezao.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import br.udesc.rolezao.MapsActivity;
 import br.udesc.rolezao.R;
-import br.udesc.rolezao.fragment.FeedFragment;
-import br.udesc.rolezao.fragment.PerfilFragment;
 import br.udesc.rolezao.helper.UsuarioFirebase;
 import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;

@@ -1,4 +1,4 @@
-package br.udesc.rolezao.activity;
+package br.udesc.rolezao;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -10,8 +10,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import br.udesc.rolezao.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -42,9 +40,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng ibirama = new LatLng(-27.054828, -49.514512);
-        //-27.054828, -49.514512
-        mMap.addMarker(new MarkerOptions().position(ibirama).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(ibirama));
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
