@@ -31,7 +31,7 @@
 
         <activity
             android:name=".activity.MapsActivity"
-            android:label="Maps"></activity>
+            android:label="@string/title_activity_maps"></activity>
         <activity android:name=".activity.CriarRoleActivity" />
         <activity
             android:name=".activity.EditarPerfilActivity"
