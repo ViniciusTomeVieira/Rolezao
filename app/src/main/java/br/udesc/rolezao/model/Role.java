@@ -13,6 +13,10 @@ public class Role {
     private String descricao;
     private int quantidadeDePessoas;
     private double dinheiro;
+    private String cidade;
+    private String estado;
+    private String numero;
+    private String latitude, longitude;
 
     public void salvarRole(Usuario usuario){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -24,6 +28,46 @@ public class Role {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public void setTitulo(String titulo) {

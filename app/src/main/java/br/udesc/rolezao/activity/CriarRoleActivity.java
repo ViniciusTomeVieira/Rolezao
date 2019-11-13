@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,7 +22,10 @@ public class CriarRoleActivity extends AppCompatActivity {
 
     private Button buttonAumentar, buttonDiminuir, buttonCriarRole, buttonMaps;
     private EditText quantidadePessoas, editTextTitulo, editTextLocal, editTextDia,editTextMes,editTextHora,editTextDescricao,editTextQuantidadePessoas, editTextDinheiro;
+    private CheckBox abriuMapa;
     private int quantidade = 0;
+    private SharedPreferences preferences;
+    private static final String CONFIGURACOES_MAPA = "ConfiguracoesMapa";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +56,14 @@ public class CriarRoleActivity extends AppCompatActivity {
         buttonDiminuir = findViewById(R.id.buttonDiminuir);
         buttonCriarRole = findViewById(R.id.buttonCriarRole);
         buttonMaps = findViewById(R.id.buttonMaps);
+        abriuMapa = findViewById(R.id.localAdicionado);
+        preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i  = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(i);
+                abriuMapa.setChecked(true);
             }
         });
         buttonAumentar.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +91,14 @@ public class CriarRoleActivity extends AppCompatActivity {
                                 if(!editTextLocal.getText().toString().equals("")){//Local
                                     if(!editTextDescricao.getText().toString().equals("")){//Descricao
                                         if(!editTextTitulo.getText().toString().equals("")){//Titulo
-                                            if(!editTextDinheiro.getText().toString().equals("")){//Dinheiro
-                                                validarFormulario(true);
-                                            }else{//Dinheiro = 0
-                                                validarFormulario(false);
+                                            if(abriuMapa.isChecked()) {
+                                                if (!editTextDinheiro.getText().toString().equals("")) {//Dinheiro
+                                                    validarFormulario(true);
+                                                } else {//Dinheiro = 0
+                                                    validarFormulario(false);
+                                                }
+                                            }else{
+                                                Toast.makeText(getApplicationContext(),"Clica no mapa para colocar a localização, brother",Toast.LENGTH_SHORT).show();
                                             }
                                         }else{
                                             Toast.makeText(getApplicationContext(),"Cadê o título???",Toast.LENGTH_SHORT).show();
@@ -138,9 +150,31 @@ public class CriarRoleActivity extends AppCompatActivity {
             role.setMes(Integer.parseInt(editTextMes.getText().toString()));
             role.setQuantidadeDePessoas(Integer.parseInt(editTextQuantidadePessoas.getText().toString()));
             role.setTitulo(editTextTitulo.getText().toString());
-            Toast.makeText(getApplicationContext(),"Setou os valores do rolê",Toast.LENGTH_SHORT).show();
+            if(preferences.contains("cidade")){
+                String cidade = preferences.getString("cidade","Miami");
+                role.setCidade(cidade);
+            }
+            if(preferences.contains("rua")){
+                String rua = preferences.getString("rua","Miami");
+                role.setLocal(rua);
+            }
+            if(preferences.contains("numero")){
+                String numero = preferences.getString("numero","Miami");
+                role.setNumero(numero);
+            }
+            if(preferences.contains("estado")){
+                String estado = preferences.getString("estado","Miami");
+                role.setEstado(estado);
+            }
+            if(preferences.contains("latitude")){
+                String latitude = preferences.getString("latitude","Miami");
+                role.setLatitude(latitude);
+            }
+            if(preferences.contains("longitude")){
+                String longitude = preferences.getString("longitude","Miami");
+                role.setLongitude(longitude);
+            }
             try {
-                Toast.makeText(getApplicationContext(),"Entrou no try",Toast.LENGTH_SHORT).show();
                 Usuario usuarioAtual = UsuarioFirebase.getDadosUsuarioLogado();
                 role.salvarRole(usuarioAtual);
                 Toast.makeText(getApplicationContext(),"Rolê criado com sucesso!",Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -39,6 +40,8 @@ public class LocalizacaoUsuarioActivity extends FragmentActivity implements OnMa
 
     //Componentes da tela
     private TextView rua,numero,cidade,estado;
+    private SharedPreferences preferences;
+    private static final String ARQUIVO_PREEFERENCIA = "ArquivoPreferencia";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class LocalizacaoUsuarioActivity extends FragmentActivity implements OnMa
         numero = findViewById(R.id.Numero);
         cidade = findViewById(R.id.Cidade);
         estado = findViewById(R.id.Estado);
+        preferences = this.getSharedPreferences(ARQUIVO_PREEFERENCIA,0);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -101,6 +105,10 @@ public class LocalizacaoUsuarioActivity extends FragmentActivity implements OnMa
                         numero.setText(endereco.getFeatureName());
                         cidade.setText(endereco.getSubAdminArea());
                         estado.setText(endereco.getAdminArea());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        String cidadeAlterada = endereco.getSubAdminArea();
+                        editor.putString("cidade",cidadeAlterada);
+                        editor.commit();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
