@@ -1,6 +1,7 @@
 package br.udesc.rolezao.fragment;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,8 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import br.udesc.rolezao.LocalizacaoUsuarioActivity;
 import br.udesc.rolezao.R;
 
 /**
@@ -28,6 +31,7 @@ public class ConfiguracoesFragment extends Fragment {
     private RadioButton bebidaSim,bebidaNao,roleTodos,roleGratuitos;
     private static final String ARQUIVO_PREEFERENCIA = "ArquivoPreferencia";
     private SharedPreferences preferences;
+    private TextView visualizar;
 
     public ConfiguracoesFragment() {
         // Required empty public constructor
@@ -49,6 +53,14 @@ public class ConfiguracoesFragment extends Fragment {
         roleTodos = view.findViewById(R.id.radioButtonRoleTodos);
         roleGratuitos = view.findViewById(R.id.radioButtonRolesGratuitos);
         preferences = this.getActivity().getSharedPreferences(ARQUIVO_PREEFERENCIA,0);
+        visualizar = view.findViewById(R.id.visualizarText);
+        visualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i  = new Intent(getActivity().getApplicationContext(), LocalizacaoUsuarioActivity.class);
+                startActivity(i);
+            }
+        });
 
         buttonSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
