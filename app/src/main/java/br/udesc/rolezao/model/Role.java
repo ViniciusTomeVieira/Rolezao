@@ -17,6 +17,7 @@ public class Role {
     private String estado;
     private String numero;
     private String latitude, longitude;
+    private String caminhoFoto;
 
     public void salvarRole(Usuario usuario){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -28,6 +29,14 @@ public class Role {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public String getCaminhoFoto() {
+        return caminhoFoto;
+    }
+
+    public void setCaminhoFoto(String caminhoFoto) {
+        this.caminhoFoto = caminhoFoto;
     }
 
     public String getCidade() {

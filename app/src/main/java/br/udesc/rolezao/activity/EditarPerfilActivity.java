@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
@@ -143,7 +144,10 @@ public class EditarPerfilActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                             //Recuperar local da foto
-                            Uri url = taskSnapshot.getDownloadUrl();
+                            /*Uri url = taskSnapshot.getDownloadUrl();*/
+                            Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                            while(!uri.isComplete());
+                                Uri url = uri.getResult();
                             atualizarFotoUsuario(url);
                         }
                     });

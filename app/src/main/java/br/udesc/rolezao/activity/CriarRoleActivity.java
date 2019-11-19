@@ -1,35 +1,61 @@
 package br.udesc.rolezao.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import br.udesc.rolezao.MapsActivity;
 import br.udesc.rolezao.R;
+import br.udesc.rolezao.helper.ConfiguracaoFirebase;
 import br.udesc.rolezao.helper.UsuarioFirebase;
 import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;
 
 public class CriarRoleActivity extends AppCompatActivity {
 
-    private Button buttonAumentar, buttonDiminuir, buttonCriarRole, buttonMaps;
+    private Button buttonAumentar, buttonDiminuir, buttonCriarRole, buttonMaps, buttonAdicionarFoto;
     private EditText quantidadePessoas, editTextTitulo, editTextLocal, editTextDia,editTextMes,editTextHora,editTextDescricao,editTextQuantidadePessoas, editTextDinheiro;
     private CheckBox abriuMapa;
     private int quantidade = 0;
     private SharedPreferences preferences;
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesMapa";
+    private static final int SELECAO_GALERIA = 200;
+    private ImageView imageEditarPerfil;
+    private Usuario usuarioLogado;
+    private StorageReference storageRef;
+    private String identificadorUsuario;
+    private String urlFotoRole;
+    private Role role = new Role();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_role);
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        storageRef = ConfiguracaoFirebase.getFirebaseStorage();
+        identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
 
         // Configura Toolbar
 
@@ -38,6 +64,8 @@ public class CriarRoleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp); //Trocar icone
+
+        //imageEditarPerfil.setImageResource(R.drawable.avatar);
 
         inicializarComponentes();
     }
@@ -58,6 +86,17 @@ public class CriarRoleActivity extends AppCompatActivity {
         buttonMaps = findViewById(R.id.buttonMaps);
         abriuMapa = findViewById(R.id.localAdicionado);
         preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
+        buttonAdicionarFoto = findViewById(R.id.buttonAdicionarFoto);
+        buttonAdicionarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Adicionar Foto
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if(i.resolveActivity(getPackageManager()) != null){
+                    startActivityForResult(i,SELECAO_GALERIA);
+                }
+            }
+        });
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +166,6 @@ public class CriarRoleActivity extends AppCompatActivity {
     }
 
     private void validarFormulario(boolean b) {
-        Toast.makeText(getApplicationContext(),"Entrou no método",Toast.LENGTH_SHORT).show();
         int dia = Integer.parseInt(editTextDia.getText().toString());
         int mes = Integer.parseInt(editTextMes.getText().toString());
         double dinheiroTotal = 0;
@@ -136,20 +174,18 @@ public class CriarRoleActivity extends AppCompatActivity {
             mes = mes/1;
             if(b){
                 double dinheiro = Double.parseDouble(editTextDinheiro.getText().toString());
-                dinheiro = dinheiro / 1;
                 dinheiroTotal = dinheiro;
             }
             //Cadastrar rolê
-
-            Role role = new Role();
             role.setDescricao(editTextDescricao.getText().toString());
             role.setDia(Integer.parseInt(editTextDia.getText().toString()));
-            role.setDinheiro(dinheiroTotal);
+            role.setDinheiro(Double.parseDouble(editTextDinheiro.getText().toString()));
             role.setHora(editTextHora.getText().toString());
             role.setLocal(editTextLocal.getText().toString());
             role.setMes(Integer.parseInt(editTextMes.getText().toString()));
             role.setQuantidadeDePessoas(Integer.parseInt(editTextQuantidadePessoas.getText().toString()));
             role.setTitulo(editTextTitulo.getText().toString());
+            Toast.makeText(getApplicationContext(),"Entrou no método",Toast.LENGTH_SHORT).show();
             if(preferences.contains("cidade")){
                 String cidade = preferences.getString("cidade","Miami");
                 role.setCidade(cidade);
@@ -186,7 +222,6 @@ public class CriarRoleActivity extends AppCompatActivity {
             }
 
         }catch(Exception ex){
-            Toast.makeText(getApplicationContext(),"Catchzada",Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
         }
     }
@@ -195,5 +230,63 @@ public class CriarRoleActivity extends AppCompatActivity {
      public boolean onSupportNavigateUp() {
      finish();
      return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            Bitmap imagem = null;
+            try{
+                //Selecao apenas da galeria
+                switch(requestCode){
+                    case SELECAO_GALERIA:
+                        Uri localImagemSelecionada = data.getData();
+                        imagem = MediaStore.Images.Media.getBitmap(getContentResolver(),localImagemSelecionada);
+                        break;
+                }
+
+                //Caso usuario tenha escolhido uma imagem
+
+                if(imagem != null){
+                    buttonAdicionarFoto.setBackgroundColor(Color.GREEN);
+                    buttonAdicionarFoto.setText("Foto adicionada");
+                    //Configura imagem na tela
+                    imageEditarPerfil.setImageBitmap(imagem);
+
+                    //Recuperar dados da imagem para o firebase
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imagem.compress(Bitmap.CompressFormat.JPEG,70,baos);
+                    byte[] dadosImagem = baos.toByteArray();
+
+                    //Salvar imagem no firebase
+                    StorageReference imagemRef = storageRef.
+                            child("imagens")
+                            .child("roles")
+                            .child(identificadorUsuario + ".jpeg");
+                    UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CriarRoleActivity.this,"Erro ao fazer upload da imagem",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            //Recuperar local da foto
+                            Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                            while(!uri.isComplete());
+                                Uri url = uri.getResult();
+                             role.setCaminhoFoto(url.toString());
+
+                        }
+                    });
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }
