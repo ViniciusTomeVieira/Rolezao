@@ -167,10 +167,50 @@ public class CriarRoleActivity extends AppCompatActivity {
     private void validarFormulario(boolean b) {
         int dia = Integer.parseInt(editTextDia.getText().toString());
         int mes = Integer.parseInt(editTextMes.getText().toString());
+        String hora = editTextHora.getText().toString();
         double dinheiroTotal = 0;
         try{
             dia = dia/1;
             mes = mes/1;
+            if(dia > 0 && dia < 32){
+
+            }else{
+                Toast.makeText(getApplicationContext(),"Dia inválido",Toast.LENGTH_SHORT).show();
+                dia = dia/0;
+            }
+            if(mes > 0 && mes < 13){
+
+            }else{
+                Toast.makeText(getApplicationContext(),"Mes inválido",Toast.LENGTH_SHORT).show();
+                mes = mes/0;
+            }
+            if(hora.length() > 0 && hora.length() < 5 && hora.length() != 3){
+                if(hora.length() == 4){
+                    String hora1 = hora.substring(0,2);
+                    String hora2 = hora.substring(2,4);
+                    int hora1int = Integer.parseInt(hora1);
+                    int hora2int = Integer.parseInt(hora2);
+                    if(hora1int < 24 && hora2int < 60 ){
+                        hora = hora1 + ":" + hora2;
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Hora inválida",Toast.LENGTH_SHORT).show();
+                        dia = dia/0;
+                    }
+
+                }else{
+                    int horaint = Integer.parseInt(hora);
+                    if(horaint < 24){
+                        hora = hora + ":00";
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Hora inválida",Toast.LENGTH_SHORT).show();
+                        dia = dia/0;
+                    }
+
+                }
+            }else{
+                Toast.makeText(getApplicationContext(),"Hora inválida",Toast.LENGTH_SHORT).show();
+                dia = dia/0;
+            }
             if(b){
                 double dinheiro = Double.parseDouble(editTextDinheiro.getText().toString());
                 dinheiroTotal = dinheiro;
@@ -179,11 +219,12 @@ public class CriarRoleActivity extends AppCompatActivity {
             role.setDescricao(editTextDescricao.getText().toString());
             role.setDia(Integer.parseInt(editTextDia.getText().toString()));
             role.setDinheiro(Double.parseDouble(editTextDinheiro.getText().toString()));
-            role.setHora(editTextHora.getText().toString());
+            role.setHora(hora);
             role.setLocal(editTextLocal.getText().toString());
             role.setMes(Integer.parseInt(editTextMes.getText().toString()));
             role.setQuantidadeDePessoas(Integer.parseInt(editTextQuantidadePessoas.getText().toString()));
             role.setTitulo(editTextTitulo.getText().toString());
+            role.setPessoasConfirmadas(1);
             Toast.makeText(getApplicationContext(),"Entrou no método",Toast.LENGTH_SHORT).show();
             if(preferences.contains("cidade")){
                 String cidade = preferences.getString("cidade","Miami");
@@ -216,12 +257,11 @@ public class CriarRoleActivity extends AppCompatActivity {
 
                 finish();
             }catch (Exception ex){
-                Toast.makeText(getApplicationContext(),"Catch interno",Toast.LENGTH_SHORT).show();
                 ex.printStackTrace();
             }
 
         }catch(Exception ex){
-            ex.printStackTrace();
+
         }
     }
 

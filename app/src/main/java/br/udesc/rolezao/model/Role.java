@@ -18,6 +18,7 @@ public class Role {
     private String numero;
     private String latitude, longitude;
     private String caminhoFoto;
+    private int pessoasConfirmadas;
 
     public void salvarRole(Usuario usuario){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -25,7 +26,13 @@ public class Role {
         rolesRef.setValue(this);
     }
 
+    public int getPessoasConfirmadas() {
+        return pessoasConfirmadas;
+    }
 
+    public void setPessoasConfirmadas(int pessoasConfirmadas) {
+        this.pessoasConfirmadas = pessoasConfirmadas;
+    }
 
     public String getTitulo() {
         return titulo;
