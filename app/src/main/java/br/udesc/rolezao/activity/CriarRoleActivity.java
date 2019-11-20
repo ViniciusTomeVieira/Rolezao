@@ -33,6 +33,7 @@ import br.udesc.rolezao.helper.ConfiguracaoFirebase;
 import br.udesc.rolezao.helper.UsuarioFirebase;
 import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CriarRoleActivity extends AppCompatActivity {
 
@@ -43,7 +44,6 @@ public class CriarRoleActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesMapa";
     private static final int SELECAO_GALERIA = 200;
-    private ImageView imageEditarPerfil;
     private Usuario usuarioLogado;
     private StorageReference storageRef;
     private String identificadorUsuario;
@@ -65,7 +65,6 @@ public class CriarRoleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp); //Trocar icone
 
-        //imageEditarPerfil.setImageResource(R.drawable.avatar);
 
         inicializarComponentes();
     }
@@ -249,16 +248,16 @@ public class CriarRoleActivity extends AppCompatActivity {
                 //Caso usuario tenha escolhido uma imagem
 
                 if(imagem != null){
-                    buttonAdicionarFoto.setBackgroundColor(Color.GREEN);
+                    //buttonAdicionarFoto.setBackgroundColor(Color.GREEN);
                     buttonAdicionarFoto.setText("Foto adicionada");
                     //Configura imagem na tela
-                    imageEditarPerfil.setImageBitmap(imagem);
 
+                    //imageEditarPerfil.setImageBitmap(imagem);
+                    buttonAdicionarFoto.setBackgroundColor(Color.GREEN);
                     //Recuperar dados da imagem para o firebase
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG,70,baos);
                     byte[] dadosImagem = baos.toByteArray();
-
                     //Salvar imagem no firebase
                     StorageReference imagemRef = storageRef.
                             child("imagens")
