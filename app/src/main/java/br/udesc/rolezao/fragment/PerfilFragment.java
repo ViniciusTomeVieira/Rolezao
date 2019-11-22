@@ -21,7 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import br.udesc.rolezao.R;
 import br.udesc.rolezao.activity.EditarPerfilActivity;
 import br.udesc.rolezao.activity.MainActivity;
+import br.udesc.rolezao.activity.RoleActivity;
 import br.udesc.rolezao.helper.UsuarioFirebase;
+import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,6 +70,14 @@ public class PerfilFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+         cidadeUsuario.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent i  = new Intent(getActivity(), RoleActivity.class);
+                 startActivity(i);
+             }
+         });
 
         //Mostra os dados do usuario
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();

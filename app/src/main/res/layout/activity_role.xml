@@ -29,7 +29,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
-        android:text="Fala galera beleza, rolezao top hoje no vilson"
+        android:text="Fala galera beleza, rolezao top hoje no vilson,Fala galera beleza, rolezao top hoje no vilson,Fala galera beleza, rolezao top hoje no vilson"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fotoRole" />
@@ -37,8 +37,9 @@
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
         android:text="Data: "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descricaoText" />
@@ -46,10 +47,10 @@
     <TextView
         android:id="@+id/dataText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
         android:text="23/11"
         app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/descricaoText" />
@@ -58,17 +59,18 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="12dp"
         android:text="Hora:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/horaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="12dp"
         android:text="23:23"
         app:layout_constraintStart_toEndOf="@+id/textView15"
@@ -78,8 +80,101 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
         android:text="Local:"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="376dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/localText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:text="Rua Dr Getulio Vargas,2261, Ibirama"
+        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/horaText" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:text="Valor: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/valorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:text="R$5,00"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/localText" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Pessoas confirmadas"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valorText" />
+
+    <TextView
+        android:id="@+id/pessoasConfirmadasText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="4/20"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView19"
+        app:layout_constraintStart_toStartOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/verNoMapaButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pessoasConfirmadasText"
+        app:srcCompat="@drawable/ic_map_white_24dp" />
+
+    <TextView
+        android:id="@+id/verNoMapaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver no mapa"
+        app:layout_constraintEnd_toEndOf="@+id/verNoMapaButton"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="@+id/verNoMapaButton"
+        app:layout_constraintTop_toBottomOf="@+id/verNoMapaButton" />
+
+    <Button
+        android:id="@+id/participarRoleButton"
+        android:layout_width="151dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorPrimary"
+        android:text="participar do rolê"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.565"
+        app:layout_constraintStart_toStartOf="@+id/pessoasConfirmadasText"
+        app:layout_constraintTop_toBottomOf="@+id/pessoasConfirmadasText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
