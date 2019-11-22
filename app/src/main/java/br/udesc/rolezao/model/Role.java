@@ -21,9 +21,9 @@ public class Role {
     private int pessoasConfirmadas;
     private String nomeFoto;
 
-    public void salvarRole(Usuario usuario){
+    public void salvarRole(String id){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
-        DatabaseReference rolesRef = firebaseRef.child("roles").child(usuario.getId());
+        DatabaseReference rolesRef = firebaseRef.child("roles").child(id);
         rolesRef.setValue(this);
     }
 

@@ -14,6 +14,7 @@ import br.udesc.rolezao.model.Usuario;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -118,7 +119,7 @@ public class RoleActivity extends AppCompatActivity {
         dataText.setText(role.getDia() + "/" + role.getMes());
         horaText.setText(role.getHora());
         localText.setText(role.getLocal() + ", " + role.getNumero() + ", " + role.getCidade());
-        valorText.setText("R$" + role.getDinheiro());
+        valorText.setText("R$" + role.getDinheiro() / role.getPessoasConfirmadas());
         pessoasConfirmadasText.setText(role.getPessoasConfirmadas() + "/" + role.getQuantidadeDePessoas());
 
     }
@@ -141,5 +142,14 @@ public class RoleActivity extends AppCompatActivity {
             }
         });
         participarDoRoleButton = findViewById(R.id.participarRoleButton);
+        participarDoRoleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                participarDoRoleButton.setText("DALEEE");
+                participarDoRoleButton.setBackgroundColor(Color.GREEN);
+                role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
+                role.salvarRole(idCriadorRole);
+            }
+        });
     }
 }

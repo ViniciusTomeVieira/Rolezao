@@ -254,7 +254,7 @@ public class CriarRoleActivity extends AppCompatActivity {
             }
             try {
                 Usuario usuarioAtual = UsuarioFirebase.getDadosUsuarioLogado();
-                role.salvarRole(usuarioAtual);
+                role.salvarRole(usuarioAtual.getId());
                 Toast.makeText(getApplicationContext(),"Rolê criado com sucesso!",Toast.LENGTH_SHORT).show();
 
                 finish();
