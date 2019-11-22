@@ -19,6 +19,7 @@ public class Role {
     private String latitude, longitude;
     private String caminhoFoto;
     private int pessoasConfirmadas;
+    private String nomeFoto;
 
     public void salvarRole(Usuario usuario){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -32,6 +33,14 @@ public class Role {
 
     public void setPessoasConfirmadas(int pessoasConfirmadas) {
         this.pessoasConfirmadas = pessoasConfirmadas;
+    }
+
+    public String getNomeFoto() {
+        return nomeFoto;
+    }
+
+    public void setNomeFoto(String nomeFoto) {
+        this.nomeFoto = nomeFoto;
     }
 
     public String getTitulo() {

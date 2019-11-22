@@ -44,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private SharedPreferences preferences;
+    private String[] permissoes = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesMapa";
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -62,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         cidade = findViewById(R.id.Cidade);
         estado = findViewById(R.id.Estado);
         buttonOk = findViewById(R.id.buttonConfirmar);
+        Permissoes.validarPermissoes(permissoes, this, 1);
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

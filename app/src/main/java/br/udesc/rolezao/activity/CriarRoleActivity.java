@@ -26,6 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Random;
 
 import br.udesc.rolezao.MapsActivity;
 import br.udesc.rolezao.R;
@@ -225,6 +226,7 @@ public class CriarRoleActivity extends AppCompatActivity {
             role.setQuantidadeDePessoas(Integer.parseInt(editTextQuantidadePessoas.getText().toString()));
             role.setTitulo(editTextTitulo.getText().toString());
             role.setPessoasConfirmadas(1);
+            role.setNomeFoto(urlFotoRole);
             Toast.makeText(getApplicationContext(),"Entrou no método",Toast.LENGTH_SHORT).show();
             if(preferences.contains("cidade")){
                 String cidade = preferences.getString("cidade","Miami");
@@ -299,10 +301,12 @@ public class CriarRoleActivity extends AppCompatActivity {
                     imagem.compress(Bitmap.CompressFormat.JPEG,70,baos);
                     byte[] dadosImagem = baos.toByteArray();
                     //Salvar imagem no firebase
+                    Random random = new Random();
+                    urlFotoRole = usuarioLogado.getId() + random.nextInt(100);
                     StorageReference imagemRef = storageRef.
                             child("imagens")
                             .child("roles")
-                            .child(identificadorUsuario + ".jpeg");
+                            .child(urlFotoRole + ".jpeg");
                     UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override

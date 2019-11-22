@@ -8,4 +8,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_teste">Map</string>
     <string name="title_activity_localizacao_usuario">Map</string>
+    <string name="title_activity_localizacao_role">Map</string>
 </resources>
