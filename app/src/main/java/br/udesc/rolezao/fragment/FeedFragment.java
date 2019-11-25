@@ -12,9 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import br.udesc.rolezao.R;
 import br.udesc.rolezao.activity.CriarRoleActivity;
+import br.udesc.rolezao.adapter.AdapterFeed;
+import br.udesc.rolezao.helper.ConfiguracaoFirebase;
+import br.udesc.rolezao.helper.Listagem;
+import br.udesc.rolezao.model.ModelListagemFeed;
+import br.udesc.rolezao.model.Role;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,9 +35,14 @@ import br.udesc.rolezao.activity.CriarRoleActivity;
 public class FeedFragment extends Fragment {
 
     private FloatingActionButton btnCigarro;
+    private RecyclerView recyclerFeed;
+    private AdapterFeed adapterFeed;
+    private DatabaseReference postagemRef = ConfiguracaoFirebase.getFirebase().child("roles");
+    private ValueEventListener valueEventListener;
+    private List<Role> listagem = new ArrayList();
 
     public FeedFragment() {
-
+    // Required empty public constructor
     }
 
 
@@ -35,6 +53,13 @@ public class FeedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         btnCigarro = view.findViewById(R.id.btn_cigarro);
 
+        recyclerFeed = view.findViewById(R.id.recycler_feed);
+
+        recyclerFeed.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+        adapterFeed = new AdapterFeed(listagem,getActivity());
+        recyclerFeed.setAdapter(adapterFeed);
+
         btnCigarro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,4 +68,11 @@ public class FeedFragment extends Fragment {
         });
          return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Listagem.listar(valueEventListener, postagemRef, listagem, new Role(), adapterFeed);
+    }
+
 }
