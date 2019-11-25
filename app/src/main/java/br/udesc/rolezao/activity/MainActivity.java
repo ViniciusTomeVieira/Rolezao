@@ -28,16 +28,23 @@ import br.udesc.rolezao.fragment.ConfiguracoesFragment;
 import br.udesc.rolezao.fragment.FeedFragment;
 import br.udesc.rolezao.fragment.PerfilFragment;
 import br.udesc.rolezao.helper.ConfiguracaoFirebase;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
+
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         // Configura Toolbar
 

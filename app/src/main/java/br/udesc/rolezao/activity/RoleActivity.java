@@ -10,10 +10,18 @@ import androidx.core.content.ContextCompat;
 import br.udesc.rolezao.LocalizacaoRoleActivity;
 import br.udesc.rolezao.LocalizacaoUsuarioActivity;
 import br.udesc.rolezao.R;
+import br.udesc.rolezao.api.NotificacaoService;
 import br.udesc.rolezao.helper.UsuarioFirebase;
 import br.udesc.rolezao.model.MyCallback;
+import br.udesc.rolezao.model.Notificacao;
+import br.udesc.rolezao.model.NotificacaoDados;
 import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +64,8 @@ public class RoleActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private static boolean active = false;
     private boolean ehCriador = false;
+    private Retrofit retrofit;
+    private String baseUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +77,12 @@ public class RoleActivity extends AppCompatActivity {
         idCriadorRole = dadosUsuarioLogado.getId();
         referencia = FirebaseDatabase.getInstance().getReference();
         preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
+
+        //Retrofit
+        baseUrl = "https://fcm.googleapis.com/fcm/";
+        retrofit = new Retrofit.Builder().baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         // Configura Toolbar
         final Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
@@ -96,7 +112,7 @@ public class RoleActivity extends AppCompatActivity {
     }
 
     public void readData(final MyCallback myCallback) {
-        DatabaseReference rolezada = referencia.child("roles").child(idCriadorRole);
+        DatabaseReference rolezada = referencia.child("roles").child("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
         rolezada.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -186,18 +202,19 @@ public class RoleActivity extends AppCompatActivity {
                                         usuarios.remove(idCriadorRole);
                                         role.setPessoasConfirmadas(role.getPessoasConfirmadas() - 1);
                                         role.setUsuariosNoRole(usuarios);
-                                        role.salvarRole(idCriadorRole);
+                                        role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
                                         participarDoRoleButton.setText("Voltar pro rolê");
                                         participarDoRoleButton.setBackgroundColor(Color.BLUE);
-                                        Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(),"Você saiu do rolê, que pena :(",Toast.LENGTH_SHORT).show();
                                     }else{
                                         usuarios.add(idCriadorRole);
                                         role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
                                         role.setUsuariosNoRole(usuarios);
-                                        role.salvarRole(idCriadorRole);
+                                        role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
                                         participarDoRoleButton.setText("Sair do rolê");
                                         participarDoRoleButton.setBackgroundColor(Color.RED);
-                                        Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(),"Você voltou pro rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                        enviarNotificacao();
                                     }
                                 }
                             });
@@ -214,6 +231,29 @@ public class RoleActivity extends AppCompatActivity {
         valorText.setText("R$" + role.getDinheiro() / role.getPessoasConfirmadas());
         pessoasConfirmadasText.setText(role.getPessoasConfirmadas() + "/" + role.getQuantidadeDePessoas());
 
+    }
+
+    private void enviarNotificacao() {
+        //Monta objeto notificacao
+        String to = ""; //Token
+        Notificacao notificacao = new Notificacao("Titulo notificacao","daleroneeeee");
+        NotificacaoDados notificacaoDados = new NotificacaoDados(to,notificacao);
+
+        NotificacaoService service = retrofit.create(NotificacaoService.class);
+        Call<NotificacaoDados> call = service.salvarNotificacao(notificacaoDados);
+        call.enqueue(new Callback<NotificacaoDados>() {
+            @Override
+            public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificacaoDados> call, Throwable t) {
+
+            }
+        });
     }
 
     private void initComponents() {
@@ -249,9 +289,9 @@ public class RoleActivity extends AppCompatActivity {
                     usuarios.add(idCriadorRole);
                     role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
                     role.setUsuariosNoRole(usuarios);
-                    role.salvarRole(idCriadorRole);
-                    participarDoRoleButton.setText("Sair do rolê");
-                    participarDoRoleButton.setBackgroundColor(Color.RED);
+                    role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
+                    /*participarDoRoleButton.setText("Sair do rolê");
+                    participarDoRoleButton.setBackgroundColor(Color.RED);*/
                     Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
                 }
 
