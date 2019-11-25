@@ -16,12 +16,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -34,11 +38,11 @@ import br.udesc.rolezao.MapsActivity;
 import br.udesc.rolezao.R;
 import br.udesc.rolezao.helper.ConfiguracaoFirebase;
 import br.udesc.rolezao.helper.UsuarioFirebase;
+import br.udesc.rolezao.model.MyCallback;
 import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;
-import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CriarRoleActivity extends AppCompatActivity {
+public class EditarRoleActivity extends AppCompatActivity {
 
     private Button buttonAumentar, buttonDiminuir, buttonCriarRole, buttonMaps, buttonAdicionarFoto;
     private EditText quantidadePessoas, editTextTitulo, editTextLocal, editTextDia,editTextMes,editTextHora,editTextDescricao,editTextQuantidadePessoas, editTextDinheiro;
@@ -51,25 +55,60 @@ public class CriarRoleActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private String identificadorUsuario;
     private String urlFotoRole;
+    private DatabaseReference referencia;
     private Role role = new Role();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_criar_role);
+        setContentView(R.layout.activity_editar_role);
         usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
         storageRef = ConfiguracaoFirebase.getFirebaseStorage();
         identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        referencia = FirebaseDatabase.getInstance().getReference();
 
         // Configura Toolbar
 
-        Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
-        toolbar.setTitle("Criar Rolê");
+        final Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
+        toolbar.setTitle("Editar Rolê");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp); //Trocar icone
 
 
         inicializarComponentes();
+        readData(new MyCallback() {
+            @Override
+            public void onCallback(Role roleInterface) {
+                toolbar.setTitle(roleInterface.getTitulo());
+                role = roleInterface;
+                fillComponents();
+            }
+        });
+    }
+
+    private void fillComponents() {
+        editTextTitulo.setText(role.getTitulo());
+        editTextLocal.setText(role.getLocal());
+        editTextDia.setText(role.getDia()+"");
+        editTextMes.setText(role.getMes()+"");
+        editTextHora.setText(role.getHora()+"");
+        editTextDescricao.setText(role.getDescricao());
+        quantidadePessoas.setText(role.getQuantidadeDePessoas()+"");
+        editTextDinheiro.setText(role.getDinheiro()+"");
+    }
+    public void readData(final MyCallback myCallback) {
+        DatabaseReference rolezada = referencia.child("roles").child(identificadorUsuario);
+        rolezada.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //String value = dataSnapshot.child("titulo").getValue().toString();
+                Role rolezada = dataSnapshot.getValue(Role.class);
+                myCallback.onCallback(rolezada);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     private void inicializarComponentes() {
@@ -187,7 +226,7 @@ public class CriarRoleActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Mes inválido",Toast.LENGTH_SHORT).show();
                 mes = mes/0;
             }
-            if(hora.length() > 0 && hora.length() < 5 && hora.length() != 3){
+            if(hora.length() > 0 && hora.length() < 6 && hora.length() != 3){
                 if(hora.length() == 4){
                     String hora1 = hora.substring(0,2);
                     String hora2 = hora.substring(2,4);
@@ -280,9 +319,9 @@ public class CriarRoleActivity extends AppCompatActivity {
     }
 
     @Override
-     public boolean onSupportNavigateUp() {
-     finish();
-     return false;
+    public boolean onSupportNavigateUp() {
+        finish();
+        return false;
     }
 
     @Override
@@ -323,7 +362,7 @@ public class CriarRoleActivity extends AppCompatActivity {
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CriarRoleActivity.this,"Erro ao fazer upload da imagem",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditarRoleActivity.this,"Erro ao fazer upload da imagem",Toast.LENGTH_SHORT).show();
 
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -333,8 +372,8 @@ public class CriarRoleActivity extends AppCompatActivity {
                             //Recuperar local da foto
                             Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
                             while(!uri.isComplete());
-                                Uri url = uri.getResult();
-                             role.setCaminhoFoto(url.toString());
+                            Uri url = uri.getResult();
+                            role.setCaminhoFoto(url.toString());
 
                         }
                     });

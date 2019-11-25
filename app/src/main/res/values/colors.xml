@@ -6,4 +6,5 @@
     <color name="cinza_medio">#DBDBDB</color>
     <color name="preto">@android:color/black</color>
     <color name="Branco_escuro">#F2F2F2</color>
+    <color name="redzada">#FC0000</color>
 </resources>

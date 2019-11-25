@@ -3,6 +3,7 @@ package br.udesc.rolezao.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import br.udesc.rolezao.LocalizacaoRoleActivity;
 import br.udesc.rolezao.LocalizacaoUsuarioActivity;
@@ -14,6 +15,7 @@ import br.udesc.rolezao.model.Usuario;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,6 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.List;
+
 public class RoleActivity extends AppCompatActivity {
 
     private ImageView fotoRole;
@@ -48,6 +52,7 @@ public class RoleActivity extends AppCompatActivity {
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesLocalRole";
     private SharedPreferences preferences;
     private static boolean active = false;
+    private boolean ehCriador = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +119,69 @@ public class RoleActivity extends AppCompatActivity {
             System.out.println(role.getLongitude());
             System.out.println(role.getTitulo());
             editor.commit();
+
+            //Verifica se quem acessou é o criador do rolê
+            if(role.getUsuariosNoRole().size() > 0){
+                if (idCriadorRole.equals(role.getUsuariosNoRole().get(0))) {
+                    ehCriador = true;
+                    participarDoRoleButton.setText("Editar rolê");
+                    participarDoRoleButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //Editar rolê
+                            Intent i  = new Intent(getApplicationContext(), EditarRoleActivity.class);
+                            startActivity(i);
+                        }
+                    });
+                    verNoMapaText.setText("Excluir rolê");
+                    verNoMapaButton.setImageResource(R.drawable.ic_delete_forever_white_24dp);
+                    verNoMapaButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(),R.color.redzada)));
+                    verNoMapaButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //Excluir rolê
+                        }
+                    });
+            }else{
+                    for(String usuario:role.getUsuariosNoRole()){
+                        if(idCriadorRole.equals(usuario)){
+                            participarDoRoleButton.setText("Sair do rolê");
+                            participarDoRoleButton.setBackgroundColor(Color.RED);
+                            participarDoRoleButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //Usuario sair do rolê
+                                    List<String> usuarios = role.getUsuariosNoRole();
+                                    boolean achou = false;
+                                    for(String usuario:role.getUsuariosNoRole()){
+                                        if(idCriadorRole.equals(usuario)){
+                                            achou = true;
+                                        }
+                                    }
+                                    if(achou){
+                                        usuarios.remove(idCriadorRole);
+                                        role.setPessoasConfirmadas(role.getPessoasConfirmadas() - 1);
+                                        role.setUsuariosNoRole(usuarios);
+                                        role.salvarRole(idCriadorRole);
+                                        participarDoRoleButton.setText("Voltar pro rolê");
+                                        participarDoRoleButton.setBackgroundColor(Color.BLUE);
+                                        Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        usuarios.add(idCriadorRole);
+                                        role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
+                                        role.setUsuariosNoRole(usuarios);
+                                        role.salvarRole(idCriadorRole);
+                                        participarDoRoleButton.setText("Sair do rolê");
+                                        participarDoRoleButton.setBackgroundColor(Color.RED);
+                                        Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+
+            }
         }
         descricaoText.setText(role.getDescricao());
         dataText.setText(role.getDia() + "/" + role.getMes());
@@ -145,10 +213,24 @@ public class RoleActivity extends AppCompatActivity {
         participarDoRoleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                participarDoRoleButton.setText("DALEEE");
-                participarDoRoleButton.setBackgroundColor(Color.GREEN);
-                role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
-                role.salvarRole(idCriadorRole);
+                List<String> usuarios = role.getUsuariosNoRole();
+                boolean achou = false;
+                for(String usuario:role.getUsuariosNoRole()){
+                    if(idCriadorRole.equals(usuario)){
+                        Toast.makeText(getApplicationContext(),"Você já está no rolê!!!",Toast.LENGTH_SHORT).show();
+                        achou = true;
+                    }
+                }
+                if(!achou){
+                    usuarios.add(idCriadorRole);
+                    role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
+                    role.setUsuariosNoRole(usuarios);
+                    role.salvarRole(idCriadorRole);
+                    participarDoRoleButton.setText("Sair do rolê");
+                    participarDoRoleButton.setBackgroundColor(Color.RED);
+                    Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

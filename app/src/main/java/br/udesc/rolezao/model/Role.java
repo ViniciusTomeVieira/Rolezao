@@ -2,6 +2,9 @@ package br.udesc.rolezao.model;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.udesc.rolezao.helper.ConfiguracaoFirebase;
 
 public class Role {
@@ -20,11 +23,19 @@ public class Role {
     private String caminhoFoto;
     private int pessoasConfirmadas;
     private String nomeFoto;
-
+    private List<String> usuariosNoRole = new ArrayList<>();
     public void salvarRole(String id){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference rolesRef = firebaseRef.child("roles").child(id);
         rolesRef.setValue(this);
+    }
+
+    public List<String> getUsuariosNoRole() {
+        return usuariosNoRole;
+    }
+
+    public void setUsuariosNoRole(List<String> usuariosNoRole) {
+        this.usuariosNoRole = usuariosNoRole;
     }
 
     public int getPessoasConfirmadas() {
