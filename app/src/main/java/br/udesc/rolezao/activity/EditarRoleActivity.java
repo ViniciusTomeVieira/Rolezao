@@ -306,7 +306,7 @@ public class EditarRoleActivity extends AppCompatActivity {
             try {
                 Usuario usuarioAtual = UsuarioFirebase.getDadosUsuarioLogado();
                 role.salvarRole(usuarioAtual.getId());
-                Toast.makeText(getApplicationContext(),"Rolê criado com sucesso!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Rolê editado com sucesso!",Toast.LENGTH_SHORT).show();
 
                 finish();
             }catch (Exception ex){

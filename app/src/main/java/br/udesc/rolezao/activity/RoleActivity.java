@@ -1,7 +1,9 @@
 package br.udesc.rolezao.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -13,6 +15,7 @@ import br.udesc.rolezao.model.MyCallback;
 import br.udesc.rolezao.model.Role;
 import br.udesc.rolezao.model.Usuario;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -78,9 +81,11 @@ public class RoleActivity extends AppCompatActivity {
         readData(new MyCallback() {
             @Override
             public void onCallback(Role roleInterface) {
-                toolbar.setTitle(roleInterface.getTitulo());
-                role = roleInterface;
-                fillComponents();
+                if(roleInterface != null){
+                    toolbar.setTitle(roleInterface.getTitulo());
+                    role = roleInterface;
+                    fillComponents();
+                }
             }
         });
     }
@@ -140,6 +145,25 @@ public class RoleActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             //Excluir rolê
+                            AlertDialog.Builder msgBox = new AlertDialog.Builder(RoleActivity.this);
+                            msgBox.setTitle("Excluir rolê");
+                            //msgBox.setIcon(R.drawable.ic_delete_forever_white_24dp);
+                            msgBox.setMessage("Tem certeza que deseja excluir o rolê?");
+                            msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    role.removerRole(idCriadorRole);
+                                    Toast.makeText(getApplicationContext(),"Rolê excluído com sucesso!",Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                            msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                            msgBox.show();
                         }
                     });
             }else{

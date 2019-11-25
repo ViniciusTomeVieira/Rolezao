@@ -24,10 +24,17 @@ public class Role {
     private int pessoasConfirmadas;
     private String nomeFoto;
     private List<String> usuariosNoRole = new ArrayList<>();
+
     public void salvarRole(String id){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference rolesRef = firebaseRef.child("roles").child(id);
         rolesRef.setValue(this);
+    }
+
+    public void removerRole(String id){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference rolesRef = firebaseRef.child("roles").child(id);
+        rolesRef.removeValue();
     }
 
     public List<String> getUsuariosNoRole() {
