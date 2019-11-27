@@ -51,12 +51,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private TextView rua,numero,cidade,estado;
     private FloatingActionButton buttonOk;
     private boolean usuarioClicou = false;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
-        toolbar.setTitle("Selecione o local do rolê");
+        toolbar = findViewById(R.id.toolbarPrincipal);
+        toolbar.setTitle("aguarde alguns segundos...");
         preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
         rua = findViewById(R.id.Rua);
         numero = findViewById(R.id.Numero);
@@ -96,6 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Add a marker in Sydney and move the camera
                 Double latitude = location.getLatitude();
                 Double longitude = location.getLongitude();
+                toolbar.setTitle("Selecione o local do rolê");
                 if(!usuarioClicou){
                     mMap.clear(); //Limpar mapa
                     LatLng localUsuario = new LatLng(latitude, longitude);

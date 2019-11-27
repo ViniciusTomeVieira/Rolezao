@@ -83,6 +83,11 @@ public class EditarRoleActivity extends AppCompatActivity {
                 role = roleInterface;
                 fillComponents();
             }
+
+            @Override
+            public void onCallbackUsuario(Usuario usuario) {
+
+            }
         });
     }
 

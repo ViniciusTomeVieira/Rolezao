@@ -17,6 +17,7 @@ public class Usuario {
     private int experiencia, nivel, conquistas;
     private double dinheiro;
     private String cidade;
+    private String token;
 
     public Usuario() {
     }
@@ -44,8 +45,17 @@ public class Usuario {
         usuarioMap.put("dinheiro",getDinheiro());
         usuarioMap.put("conquistas",getConquistas());
         usuarioMap.put("caminhoFoto",getCaminhoFoto());
+        usuarioMap.put("token",getToken());
 
         return usuarioMap;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public int getExperiencia() {

@@ -60,12 +60,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String s) {
 
     }
-    public void recuperarToken(){
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String token = instanceIdResult.getToken();
-            }
-        });
-    }
+
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.media.tv.TvContract;
 import android.os.Build;
@@ -18,9 +19,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import br.udesc.rolezao.R;
@@ -28,13 +33,17 @@ import br.udesc.rolezao.fragment.ConfiguracoesFragment;
 import br.udesc.rolezao.fragment.FeedFragment;
 import br.udesc.rolezao.fragment.PerfilFragment;
 import br.udesc.rolezao.helper.ConfiguracaoFirebase;
+import br.udesc.rolezao.helper.UsuarioFirebase;
+import br.udesc.rolezao.model.Usuario;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
-
+    private static final String CONFIGURACOES_MAPA = "ConfiguracoesLocalRole";
+    private SharedPreferences preferences;
+    private Usuario usuarioLogado;
 
 
 
@@ -44,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        recuperarToken();
         // Configura Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
@@ -148,5 +158,18 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void recuperarToken(){
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String token = instanceIdResult.getToken();
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("token",token);
+                editor.commit();
+                usuarioLogado.setToken(token);
+                usuarioLogado.atualizar();
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package br.udesc.rolezao.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
@@ -29,6 +30,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,8 +59,7 @@ public class RoleActivity extends AppCompatActivity {
     private FloatingActionButton verNoMapaButton;
     private Button participarDoRoleButton; //Mostrar notificação
     private String idCriadorRole;
-    private String titulo = "dale";
-    private Role role = new Role();;
+    private Role role = new Role();
     private DatabaseReference referencia;
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesLocalRole";
     private SharedPreferences preferences;
@@ -66,6 +67,9 @@ public class RoleActivity extends AppCompatActivity {
     private boolean ehCriador = false;
     private Retrofit retrofit;
     private String baseUrl;
+    private Usuario usuarioCriador = new Usuario();
+    private Usuario dadosUsuarioLogado;
+    private StorageReference imagem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +77,7 @@ public class RoleActivity extends AppCompatActivity {
         active = true;
         //Pegar informações do banco
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
-        final Usuario dadosUsuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        dadosUsuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
         idCriadorRole = dadosUsuarioLogado.getId();
         referencia = FirebaseDatabase.getInstance().getReference();
         preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
@@ -87,7 +91,6 @@ public class RoleActivity extends AppCompatActivity {
         // Configura Toolbar
         final Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
         toolbar.setTitle("dale");
-        System.out.println("Eu existo");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Diz que é uma janela para voltar
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp); //Trocar icone
@@ -97,10 +100,17 @@ public class RoleActivity extends AppCompatActivity {
         readData(new MyCallback() {
             @Override
             public void onCallback(Role roleInterface) {
-                if(roleInterface != null){
+                if(roleInterface != null && active){
                     toolbar.setTitle(roleInterface.getTitulo());
                     role = roleInterface;
                     fillComponents();
+                }
+            }
+
+            @Override
+            public void onCallbackUsuario(Usuario usuario) {
+                if(usuario != null && active){
+                    usuarioCriador = usuario;
                 }
             }
         });
@@ -111,8 +121,15 @@ public class RoleActivity extends AppCompatActivity {
         active = false;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        active = false;
+    }
+
     public void readData(final MyCallback myCallback) {
         DatabaseReference rolezada = referencia.child("roles").child("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
+        DatabaseReference usuariozada = referencia.child("usuarios").child("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
         rolezada.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -124,14 +141,26 @@ public class RoleActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+        usuariozada.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usuario usuariozada = dataSnapshot.getValue(Usuario.class);
+                myCallback.onCallbackUsuario(usuariozada);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void fillComponents() {
         //Busca imagem no storage e coloca na ImageView
-        if(this.active){
+        if(!RoleActivity.this.isDestroyed()){
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            StorageReference imagem = storageReference.child("imagens").child("roles").child(role.getNomeFoto() + ".jpeg");
+            imagem = storageReference.child("imagens").child("roles").child(role.getNomeFoto() + ".jpeg");
             Glide.with(RoleActivity.this).using(new FirebaseImageLoader()).load(imagem).into(fotoRole);
-            System.out.println(role.getNomeFoto());
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("latitude",role.getLatitude());
             editor.putString("longitude",role.getLongitude());
@@ -214,7 +243,6 @@ public class RoleActivity extends AppCompatActivity {
                                         participarDoRoleButton.setText("Sair do rolê");
                                         participarDoRoleButton.setBackgroundColor(Color.RED);
                                         Toast.makeText(getApplicationContext(),"Você voltou pro rolê, daleeeee",Toast.LENGTH_SHORT).show();
-                                        enviarNotificacao();
                                     }
                                 }
                             });
@@ -234,9 +262,34 @@ public class RoleActivity extends AppCompatActivity {
     }
 
     private void enviarNotificacao() {
+        String token = preferences.getString("token","Miami");
         //Monta objeto notificacao
-        String to = ""; //Token
-        Notificacao notificacao = new Notificacao("Titulo notificacao","daleroneeeee");
+        String to = token; //Token
+        Notificacao notificacao = new Notificacao("Você entrou no rolê!!!","Parabéns, você entrou no rolê " + role.getTitulo() + "!!");
+        NotificacaoDados notificacaoDados = new NotificacaoDados(to,notificacao);
+
+        NotificacaoService service = retrofit.create(NotificacaoService.class);
+        Call<NotificacaoDados> call = service.salvarNotificacao(notificacaoDados);
+        call.enqueue(new Callback<NotificacaoDados>() {
+            @Override
+            public void onResponse(Call<NotificacaoDados> call, Response<NotificacaoDados> response) {
+                if(response.isSuccessful()){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificacaoDados> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void enviarNotificacaoParaCriador() {
+        String token = usuarioCriador.getToken();
+        //Monta objeto notificacao
+        String to = token; //Token
+        Notificacao notificacao = new Notificacao(dadosUsuarioLogado.getNome() + " entrou em " + role.getTitulo(),"Você tem mais um no rolê! Que legal! " + role.getTitulo() + "!!");
         NotificacaoDados notificacaoDados = new NotificacaoDados(to,notificacao);
 
         NotificacaoService service = retrofit.create(NotificacaoService.class);
@@ -290,12 +343,18 @@ public class RoleActivity extends AppCompatActivity {
                     role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
                     role.setUsuariosNoRole(usuarios);
                     role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
-                    /*participarDoRoleButton.setText("Sair do rolê");
-                    participarDoRoleButton.setBackgroundColor(Color.RED);*/
+                    enviarNotificacao();
+                    enviarNotificacaoParaCriador();
                     Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+    }
+    @Override
+     public boolean onSupportNavigateUp() {
+        active = false;
+        finish();
+        return false;
     }
 }

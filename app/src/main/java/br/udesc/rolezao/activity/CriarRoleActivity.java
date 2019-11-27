@@ -103,6 +103,7 @@ public class CriarRoleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i  = new Intent(getApplicationContext(), MapsActivity.class);
+                Toast.makeText(getApplicationContext(),"Aguarde um pouco...",Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 abriuMapa.setChecked(true);
             }
