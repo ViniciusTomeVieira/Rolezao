@@ -58,7 +58,7 @@ public class RoleActivity extends AppCompatActivity {
     private TextView descricaoText,dataText, horaText, localText, valorText, pessoasConfirmadasText,verNoMapaText;
     private FloatingActionButton verNoMapaButton;
     private Button participarDoRoleButton; //Mostrar notificação
-    private String idCriadorRole;
+    private String idUsuario;
     private Role role = new Role();
     private DatabaseReference referencia;
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesLocalRole";
@@ -70,6 +70,7 @@ public class RoleActivity extends AppCompatActivity {
     private Usuario usuarioCriador = new Usuario();
     private Usuario dadosUsuarioLogado;
     private StorageReference imagem;
+    private String idCriador;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,10 +79,10 @@ public class RoleActivity extends AppCompatActivity {
         //Pegar informações do banco
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
         dadosUsuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
-        idCriadorRole = dadosUsuarioLogado.getId();
+        idUsuario = dadosUsuarioLogado.getId();
         referencia = FirebaseDatabase.getInstance().getReference();
         preferences = this.getSharedPreferences(CONFIGURACOES_MAPA,0);
-
+        idCriador = preferences.getString("idCriador", "dale");
         //Retrofit
         baseUrl = "https://fcm.googleapis.com/fcm/";
         retrofit = new Retrofit.Builder().baseUrl(baseUrl)
@@ -128,8 +129,8 @@ public class RoleActivity extends AppCompatActivity {
     }
 
     public void readData(final MyCallback myCallback) {
-        DatabaseReference rolezada = referencia.child("roles").child("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
-        DatabaseReference usuariozada = referencia.child("usuarios").child("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
+        DatabaseReference rolezada = referencia.child("roles").child(idCriador);
+        DatabaseReference usuariozada = referencia.child("usuarios").child(idCriador);
         rolezada.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -173,7 +174,7 @@ public class RoleActivity extends AppCompatActivity {
 
             //Verifica se quem acessou é o criador do rolê
             if(role.getUsuariosNoRole().size() > 0){
-                if (idCriadorRole.equals(role.getUsuariosNoRole().get(0))) {
+                if (idUsuario.equals(role.getUsuariosNoRole().get(0))) {
                     ehCriador = true;
                     participarDoRoleButton.setText("Editar rolê");
                     participarDoRoleButton.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +199,7 @@ public class RoleActivity extends AppCompatActivity {
                             msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    role.removerRole(idCriadorRole);
+                                    role.removerRole(idUsuario);
                                     Toast.makeText(getApplicationContext(),"Rolê excluído com sucesso!",Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
@@ -214,7 +215,7 @@ public class RoleActivity extends AppCompatActivity {
                     });
             }else{
                     for(String usuario:role.getUsuariosNoRole()){
-                        if(idCriadorRole.equals(usuario)){
+                        if(idUsuario.equals(usuario)){
                             participarDoRoleButton.setText("Sair do rolê");
                             participarDoRoleButton.setBackgroundColor(Color.RED);
                             participarDoRoleButton.setOnClickListener(new View.OnClickListener() {
@@ -224,23 +225,23 @@ public class RoleActivity extends AppCompatActivity {
                                     List<String> usuarios = role.getUsuariosNoRole();
                                     boolean achou = false;
                                     for(String usuario:role.getUsuariosNoRole()){
-                                        if(idCriadorRole.equals(usuario)){
+                                        if(idUsuario.equals(usuario)){
                                             achou = true;
                                         }
                                     }
                                     if(achou){
-                                        usuarios.remove(idCriadorRole);
+                                        usuarios.remove(idUsuario);
                                         role.setPessoasConfirmadas(role.getPessoasConfirmadas() - 1);
                                         role.setUsuariosNoRole(usuarios);
-                                        role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
+                                        role.salvarRole(idCriador);
                                         participarDoRoleButton.setText("Voltar pro rolê");
                                         participarDoRoleButton.setBackgroundColor(Color.BLUE);
                                         Toast.makeText(getApplicationContext(),"Você saiu do rolê, que pena :(",Toast.LENGTH_SHORT).show();
                                     }else{
-                                        usuarios.add(idCriadorRole);
+                                        usuarios.add(idUsuario);
                                         role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
                                         role.setUsuariosNoRole(usuarios);
-                                        role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
+                                        role.salvarRole(idCriador);
                                         participarDoRoleButton.setText("Sair do rolê");
                                         participarDoRoleButton.setBackgroundColor(Color.RED);
                                         Toast.makeText(getApplicationContext(),"Você voltou pro rolê, daleeeee",Toast.LENGTH_SHORT).show();
@@ -334,13 +335,13 @@ public class RoleActivity extends AppCompatActivity {
                 List<String> usuarios = role.getUsuariosNoRole();
                 boolean achou = false;
                 for(String usuario:role.getUsuariosNoRole()){
-                    if(idCriadorRole.equals(usuario)){
+                    if(idUsuario.equals(usuario)){
                         Toast.makeText(getApplicationContext(),"Você já está no rolê!!!",Toast.LENGTH_SHORT).show();
                         achou = true;
                     }
                 }
                 if(!achou){
-                    usuarios.add(idCriadorRole);
+                    usuarios.add(idUsuario);
                     role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
                     role.setUsuariosNoRole(usuarios);
                     role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");

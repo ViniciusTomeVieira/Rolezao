@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -75,15 +76,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         }
 
 
-        holder.imagem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("idCriador", listagemFeed.getIdCriador());
-                editor.commit();
-                context.startActivity(new Intent(context, RoleActivity.class));
-            }
-        });
+        holder.setIdCriador(listagemFeed.getIdCriador());
 
     }
 
@@ -102,8 +95,18 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         public TextView dataInicio;
         public TextView dataFim;
         public CardView cardPostagem;
+        public String idCriador;
+        public LinearLayout linearPreco;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public String getIdCriador() {
+            return idCriador;
+        }
+
+        public void setIdCriador(String idCriador) {
+            this.idCriador = idCriador;
+        }
+
+        public MyViewHolder(@NonNull View itemView){
             super(itemView);
             tvTitulo = itemView.findViewById(R.id.titulo_postagem);
             local = itemView.findViewById(R.id.local_role);
@@ -114,6 +117,28 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
             dataInicio = itemView.findViewById(R.id.data_inicio);
             dataFim = itemView.findViewById(R.id.data_fim_role);
             cardPostagem = itemView.findViewById(R.id.card_view_postagem);
+            linearPreco = itemView.findViewById(R.id.linearPreco);
+
+            View.OnClickListener listener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("idCriador", getIdCriador());
+                    editor.commit();
+                    context.startActivity(new Intent(context, RoleActivity.class));
+                }
+            };
+
+            imagem.setOnClickListener(listener);
+            dataInicio.setOnClickListener(listener);
+            dataFim.setOnClickListener(listener);
+            preco.setOnClickListener(listener);
+            qtdPessoas.setOnClickListener(listener);
+            tvTitulo.setOnClickListener(listener);
+            descricao.setOnClickListener(listener);
+            local.setOnClickListener(listener);
+            cardPostagem.setOnClickListener(listener);
+            linearPreco.setOnClickListener(listener);
         }
     }
 
