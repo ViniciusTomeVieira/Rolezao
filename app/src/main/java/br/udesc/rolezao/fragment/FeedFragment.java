@@ -72,7 +72,9 @@ public class FeedFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Listagem.listar(valueEventListener, postagemRef, listagem, new Role(), adapterFeed);
+        if(listagem.isEmpty()) {
+           Listagem.listar(valueEventListener, postagemRef, listagem, new Role(), adapterFeed, this.getContext());
+        }
     }
 
 }
