@@ -239,6 +239,7 @@ public class CriarRoleActivity extends AppCompatActivity {
             role.setQuantidadeDePessoas(Integer.parseInt(editTextQuantidadePessoas.getText().toString()));
             role.setTitulo(editTextTitulo.getText().toString());
             role.setPessoasConfirmadas(1);
+            role.setIdCriador(identificadorUsuario);
             role.setNomeFoto(urlFotoRole);
             Toast.makeText(getApplicationContext(),"Entrou no método",Toast.LENGTH_SHORT).show();
             if(preferences.contains("cidade")){

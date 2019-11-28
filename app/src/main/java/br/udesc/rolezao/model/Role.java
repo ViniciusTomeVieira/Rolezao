@@ -23,6 +23,7 @@ public class Role {
     private String caminhoFoto;
     private int pessoasConfirmadas;
     private String nomeFoto;
+    private String idCriador;
     private List<String> usuariosNoRole = new ArrayList<>();
 
     public void salvarRole(String id){
@@ -43,6 +44,14 @@ public class Role {
 
     public void setUsuariosNoRole(List<String> usuariosNoRole) {
         this.usuariosNoRole = usuariosNoRole;
+    }
+
+    public String getIdCriador() {
+        return idCriador;
+    }
+
+    public void setIdCriador(String idCriador) {
+        this.idCriador = idCriador;
     }
 
     public int getPessoasConfirmadas() {

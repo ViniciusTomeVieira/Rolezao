@@ -154,10 +154,11 @@ public class RoleActivity extends AppCompatActivity {
             }
         });
     }
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void fillComponents() {
         //Busca imagem no storage e coloca na ImageView
-        if(!RoleActivity.this.isDestroyed()){
+
+        if(!RoleActivity.this.isFinishing()){
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             imagem = storageReference.child("imagens").child("roles").child(role.getNomeFoto() + ".jpeg");
             Glide.with(RoleActivity.this).using(new FirebaseImageLoader()).load(imagem).into(fotoRole);
