@@ -15,7 +15,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <TextView
+                android:id="@+id/semRoleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Não há roles na sua região"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_feed"
+                app:layout_constraintStart_toStartOf="@+id/recycler_feed"
+                app:layout_constraintTop_toTopOf="@+id/recycler_feed"
+                tools:visibility="gone" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_feed"
                 android:layout_width="match_parent"
@@ -36,6 +46,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.95"
                 app:layout_constraintStart_toStartOf="parent" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

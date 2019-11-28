@@ -231,7 +231,7 @@ public class CriarRoleActivity extends AppCompatActivity {
             //Cadastrar rolê
             role.setDescricao(editTextDescricao.getText().toString());
             role.setDia(Integer.parseInt(editTextDia.getText().toString()));
-            role.setDinheiro(Double.parseDouble(editTextDinheiro.getText().toString()));
+            role.setDinheiro(dinheiroTotal);
             role.setHora(hora);
             role.setUsuariosNoRole(usuariosNoRole);
             role.setLocal(editTextLocal.getText().toString());

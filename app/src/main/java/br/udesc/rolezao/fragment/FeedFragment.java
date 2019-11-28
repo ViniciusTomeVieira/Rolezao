@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +41,7 @@ public class FeedFragment extends Fragment {
     private DatabaseReference postagemRef = ConfiguracaoFirebase.getFirebase().child("roles");
     private ValueEventListener valueEventListener;
     private List<Role> listagem = new ArrayList();
+    private TextView semRole;
 
     public FeedFragment() {
     // Required empty public constructor
@@ -54,7 +56,7 @@ public class FeedFragment extends Fragment {
         btnCigarro = view.findViewById(R.id.btn_cigarro);
 
         recyclerFeed = view.findViewById(R.id.recycler_feed);
-
+        semRole = view.findViewById(R.id.semRoleTextView);
         recyclerFeed.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapterFeed = new AdapterFeed(listagem,getActivity());

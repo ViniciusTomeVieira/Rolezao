@@ -155,11 +155,11 @@ public class RoleActivity extends AppCompatActivity {
             }
         });
     }
-    //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void fillComponents() {
         //Busca imagem no storage e coloca na ImageView
 
-        if(!RoleActivity.this.isFinishing()){
+        if(!RoleActivity.this.isDestroyed()){
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             imagem = storageReference.child("imagens").child("roles").child(role.getNomeFoto() + ".jpeg");
             Glide.with(RoleActivity.this).using(new FirebaseImageLoader()).load(imagem).into(fotoRole);
@@ -344,7 +344,7 @@ public class RoleActivity extends AppCompatActivity {
                     usuarios.add(idUsuario);
                     role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
                     role.setUsuariosNoRole(usuarios);
-                    role.salvarRole("d3yy7LKUGFTxDZLgx5FBxOJIQv43");
+                    role.salvarRole(idCriador);
                     enviarNotificacao();
                     enviarNotificacaoParaCriador();
                     Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();

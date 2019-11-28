@@ -26,7 +26,59 @@ public class Listagem {
                 for (DataSnapshot ds: dataSnapshot.getChildren()) {
                     Role r = (Role) ds.getValue(object.getClass());
                     if(preferenciasPeople.contains("cidade")) {
-                        if (r.getCidade().equals(preferenciasPeople.getString("cidade", "Ibirama"))) {
+                        if(preferenciasPeople.contains("roles")){
+                            if(preferenciasPeople.getInt("roles",0) == 2131230982){
+                                int preco = 0;
+                                if (r.getCidade().equals(preferenciasPeople.getString("cidade", "Ibirama")) && r.getDinheiro() == preco) {
+                                    boolean achouIgual = false;
+                                    for(Object role: list){
+                                        Role rolezada = (Role) role;
+                                        if(rolezada.getIdCriador().equals(r.getIdCriador())){
+                                            achouIgual = true;
+                                        }
+                                    }
+                                    if(!achouIgual){
+                                        list.add(r);
+                                    }
+                                }
+                            }else{
+                                if (r.getCidade().equals(preferenciasPeople.getString("cidade", "Ibirama"))) {
+                                    boolean achouIgual = false;
+                                    for(Object role: list){
+                                        Role rolezada = (Role) role;
+                                        if(rolezada.getIdCriador().equals(r.getIdCriador())){
+                                            achouIgual = true;
+                                        }
+                                    }
+                                    if(!achouIgual){
+                                        list.add(r);
+                                    }
+                                }
+                            }
+                        }else{
+                            if (r.getCidade().equals(preferenciasPeople.getString("cidade", "Ibirama"))) {
+                                boolean achouIgual = false;
+                                for(Object role: list){
+                                    Role rolezada = (Role) role;
+                                    if(rolezada.getIdCriador().equals(r.getIdCriador())){
+                                        achouIgual = true;
+                                    }
+                                }
+                                if(!achouIgual){
+                                    list.add(r);
+                                }
+                            }
+                        }
+
+                    }else{
+                        boolean achouIgual = false;
+                        for(Object role: list){
+                            Role rolezada = (Role) role;
+                            if(rolezada.getIdCriador().equals(r.getIdCriador())){
+                                achouIgual = true;
+                            }
+                        }
+                        if(!achouIgual){
                             list.add(r);
                         }
                     }
