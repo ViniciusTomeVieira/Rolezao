@@ -9,227 +9,238 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/ConfigConta"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="Configurações da conta"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/ConteudoConta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            app:cardBackgroundColor="@android:color/white">
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/ConfigConta"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="Configurações da conta"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/cidadeText"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/ConteudoConta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@android:color/white">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:background="#FFFFFF"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="left"
-                        android:text="Cidade: "
-                        android:textColor="#020000"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/editTextCidade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:ems="10"
-                        android:gravity="center_horizontal"
-                        android:inputType="textPersonName"
-                        android:text="Ibirama"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:text="Sua localização:"
-                        android:textColor="#050000"
-                        android:textSize="16sp"
-                        app:fontFamily="sans-serif-light" />
-
-                    <TextView
-                        android:id="@+id/visualizarText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="110dp"
-                        android:layout_weight="1"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:text="Visualizar"
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/configRole"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Configurações do rolê"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/ConteudoRole"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            app:cardBackgroundColor="@android:color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutBebida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/bebidaText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="left"
-                        android:text="Bebida?"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGroupBebida"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:checkedButton="@id/radioButtonBebidaSim"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radioButtonBebidaSim"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sim" />
+                            android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/radioButtonBebidaNao"
+                            <TextView
+                                android:id="@+id/cidadeText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="#FFFFFF"
+                                android:fontFamily="sans-serif-light"
+                                android:gravity="left"
+                                android:text="Cidade: "
+                                android:textColor="#020000"
+                                android:textSize="16sp"
+                                android:textStyle="normal" />
+
+                            <EditText
+                                android:id="@+id/editTextCidade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:ems="10"
+                                android:gravity="center_horizontal"
+                                android:inputType="textPersonName"
+                                android:text="Ibirama"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="30dp"
-                            android:layout_weight="1"
-                            android:text="Não"
-                            android:visibility="visible" />
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
 
-                    </RadioGroup>
+                            <TextView
+                                android:id="@+id/location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:text="Sua localização:"
+                                android:textColor="#050000"
+                                android:textSize="16sp"
+                                app:fontFamily="sans-serif-light" />
 
-                </LinearLayout>
+                            <TextView
+                                android:id="@+id/visualizarText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="110dp"
+                                android:layout_weight="1"
+                                android:gravity="center|center_horizontal|center_vertical"
+                                android:text="Visualizar"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutRole"
-                    android:layout_width="wrap_content"
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/configRole"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:gravity="center"
+                    android:text="Configurações do rolê"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/RolesText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Rolês:"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/ConteudoRole"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@android:color/white">
 
-                    <RadioGroup
-                        android:id="@+id/radioGroupRoles"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <RadioButton
-                            android:id="@+id/radioButtonRoleTodos"
+                        <LinearLayout
+                            android:id="@+id/linearLayoutBebida"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:checked="true"
-                            android:text="Todos" />
+                            android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/radioButtonRolesGratuitos"
+                            <TextView
+                                android:id="@+id/bebidaText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-light"
+                                android:gravity="left"
+                                android:text="Bebida?"
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
+
+                            <RadioGroup
+                                android:id="@+id/radioGroupBebida"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checkedButton="@id/radioButtonBebidaSim"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/radioButtonBebidaSim"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sim" />
+
+                                <RadioButton
+                                    android:id="@+id/radioButtonBebidaNao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_weight="1"
+                                    android:text="Não"
+                                    android:visibility="visible" />
+
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutRole"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="13dp"
-                            android:text="Gratuitos" />
-                    </RadioGroup>
-                </LinearLayout>
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/RolesText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Rolês:"
+                                android:textColor="#000000"
+                                android:textSize="16sp" />
+
+                            <RadioGroup
+                                android:id="@+id/radioGroupRoles"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/radioButtonRoleTodos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="12dp"
+                                    android:checked="true"
+                                    android:text="Todos" />
+
+                                <RadioButton
+                                    android:id="@+id/radioButtonRolesGratuitos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="13dp"
+                                    android:text="Gratuitos" />
+                            </RadioGroup>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/buttonSalvarConfiguracoes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="335dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Salvar Configurações"
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/buttonSalvarConfiguracoes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="335dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/colorPrimary"
-            android:text="Salvar Configurações"
-            android:textColor="#FFFFFF" />
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

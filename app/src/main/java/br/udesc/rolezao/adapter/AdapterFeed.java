@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -97,6 +98,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         public CardView cardPostagem;
         public String idCriador;
         public LinearLayout linearPreco;
+        public HorizontalScrollView scroll;
 
         public String getIdCriador() {
             return idCriador;
