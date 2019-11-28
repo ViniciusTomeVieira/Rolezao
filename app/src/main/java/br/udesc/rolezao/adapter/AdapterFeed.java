@@ -36,6 +36,8 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
     private List<Role> listagem = new ArrayList();
     private Context context;
     private static final String CONFIGURACOES_MAPA = "ConfiguracoesLocalRole";
+    private static final String ARQUIVO_PREEFERENCIA = "ArquivoPreferencia";
+    private SharedPreferences preferenciasPeople;
     private SharedPreferences preferences;
 
 
@@ -43,6 +45,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         this.listagem = listagem;
         this.context = context;
         preferences = context.getSharedPreferences(this.CONFIGURACOES_MAPA, 0);
+        preferenciasPeople = context.getSharedPreferences(this.ARQUIVO_PREEFERENCIA, 0);
     }
 
     @NonNull
@@ -52,9 +55,11 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         return new MyViewHolder(viewLista);
     }
 
+    private Role listagemFeed;
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Role listagemFeed = listagem.get(position);
+        listagemFeed = listagem.get(position);
         holder.descricao.setText(listagemFeed.getDescricao());
         holder.dataFim.setText("");
         holder.dataInicio.setText(listagemFeed.getDia() + "/"+ listagemFeed.getMes() + " "+ listagemFeed.getHora());
@@ -69,13 +74,13 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
             holder.imagem.setImageResource(R.drawable.backgrounddegrade);
         }
 
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("idCriador", listagemFeed.getIdCriador());
 
-        editor.commit();
         holder.imagem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("idCriador", listagemFeed.getIdCriador());
+                editor.commit();
                 context.startActivity(new Intent(context, RoleActivity.class));
             }
         });
