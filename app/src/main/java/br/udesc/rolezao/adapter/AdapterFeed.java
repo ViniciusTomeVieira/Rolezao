@@ -1,6 +1,8 @@
 package br.udesc.rolezao.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import br.udesc.rolezao.R;
+import br.udesc.rolezao.activity.CriarRoleActivity;
+import br.udesc.rolezao.activity.RoleActivity;
 import br.udesc.rolezao.helper.UsuarioFirebase;
 import br.udesc.rolezao.model.ModelListagemFeed;
 import br.udesc.rolezao.model.Role;
@@ -30,10 +35,14 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
 
     private List<Role> listagem = new ArrayList();
     private Context context;
+    private static final String CONFIGURACOES_MAPA = "ConfiguracoesLocalRole";
+    private SharedPreferences preferences;
+
 
     public AdapterFeed(List<Role> listagem, Context context) {
         this.listagem = listagem;
         this.context = context;
+        preferences = context.getSharedPreferences(this.CONFIGURACOES_MAPA, 0);
     }
 
     @NonNull
@@ -59,6 +68,18 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         }else{
             holder.imagem.setImageResource(R.drawable.backgrounddegrade);
         }
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("idCriador", listagemFeed.getIdCriador());
+
+        editor.commit();
+        holder.imagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, RoleActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -75,6 +96,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         public TextView qtdPessoas;
         public TextView dataInicio;
         public TextView dataFim;
+        public CardView cardPostagem;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +108,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
             preco = itemView.findViewById(R.id.preco);
             dataInicio = itemView.findViewById(R.id.data_inicio);
             dataFim = itemView.findViewById(R.id.data_fim_role);
+            cardPostagem = itemView.findViewById(R.id.card_view_postagem);
         }
     }
 
