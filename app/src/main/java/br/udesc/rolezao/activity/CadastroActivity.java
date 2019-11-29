@@ -100,7 +100,7 @@ public class CadastroActivity extends AppCompatActivity {
                                 UsuarioFirebase.atualizarNomeUsuario(usuarioMain.getNome());
 
                                 Toast.makeText(CadastroActivity.this,"Cadastro com sucesso!",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(),IntroActivity.class));
                                 finish();
                             }catch(Exception e){
                                 e.printStackTrace();
