@@ -238,13 +238,18 @@ public class RoleActivity extends AppCompatActivity {
                                         participarDoRoleButton.setBackgroundColor(Color.BLUE);
                                         Toast.makeText(getApplicationContext(),"Você saiu do rolê, que pena :(",Toast.LENGTH_SHORT).show();
                                     }else{
-                                        usuarios.add(idUsuario);
-                                        role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
-                                        role.setUsuariosNoRole(usuarios);
-                                        role.salvarRole(idCriador);
-                                        participarDoRoleButton.setText("Sair do rolê");
-                                        participarDoRoleButton.setBackgroundColor(Color.RED);
-                                        Toast.makeText(getApplicationContext(),"Você voltou pro rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                        if(role.getPessoasConfirmadas() == role.getQuantidadeDePessoas()){
+                                            Toast.makeText(getApplicationContext(),"O rolê já está cheio, camarada",Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            usuarios.add(idUsuario);
+                                            role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
+                                            role.setUsuariosNoRole(usuarios);
+                                            role.salvarRole(idCriador);
+                                            participarDoRoleButton.setText("Sair do rolê");
+                                            participarDoRoleButton.setBackgroundColor(Color.RED);
+                                            Toast.makeText(getApplicationContext(),"Você voltou pro rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                                        }
+
                                     }
                                 }
                             });
@@ -341,13 +346,18 @@ public class RoleActivity extends AppCompatActivity {
                     }
                 }
                 if(!achou){
-                    usuarios.add(idUsuario);
-                    role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
-                    role.setUsuariosNoRole(usuarios);
-                    role.salvarRole(idCriador);
-                    enviarNotificacao();
-                    enviarNotificacaoParaCriador();
-                    Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                    if(role.getPessoasConfirmadas() == role.getQuantidadeDePessoas()){
+                        Toast.makeText(getApplicationContext(),"O rolê já está cheio, camarada",Toast.LENGTH_SHORT).show();
+                    }else{
+                        usuarios.add(idUsuario);
+                        role.setPessoasConfirmadas(role.getPessoasConfirmadas() + 1);
+                        role.setUsuariosNoRole(usuarios);
+                        role.salvarRole(idCriador);
+                        enviarNotificacao();
+                        enviarNotificacaoParaCriador();
+                        Toast.makeText(getApplicationContext(),"Você entrou no rolê, daleeeee",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
             }

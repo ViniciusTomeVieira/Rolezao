@@ -2,6 +2,7 @@ package br.udesc.rolezao.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -41,7 +42,9 @@ public class FeedFragment extends Fragment {
     private DatabaseReference postagemRef = ConfiguracaoFirebase.getFirebase().child("roles");
     private ValueEventListener valueEventListener;
     private List<Role> listagem = new ArrayList();
-    private TextView semRole;
+    private static final String ARQUIVO_PREEFERENCIA = "ArquivoPreferencia";
+    private static SharedPreferences preferenciasPeople;
+
 
     public FeedFragment() {
     // Required empty public constructor
@@ -56,7 +59,6 @@ public class FeedFragment extends Fragment {
         btnCigarro = view.findViewById(R.id.btn_cigarro);
 
         recyclerFeed = view.findViewById(R.id.recycler_feed);
-        semRole = view.findViewById(R.id.semRoleTextView);
         recyclerFeed.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapterFeed = new AdapterFeed(listagem,getActivity());
@@ -74,6 +76,12 @@ public class FeedFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        preferenciasPeople = getActivity().getApplicationContext().getSharedPreferences(ARQUIVO_PREEFERENCIA, 0);
+        if(!preferenciasPeople.contains("cidade")) {
+            SharedPreferences.Editor editor = preferenciasPeople.edit();
+            editor.putString("cidade", "Ibirama");
+            editor.commit();
+        }
         if(listagem.isEmpty()) {
            Listagem.listar(valueEventListener, postagemRef, listagem, new Role(), adapterFeed, this.getContext());
         }
